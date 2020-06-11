@@ -77,7 +77,7 @@ char playfield[H][W] =
 };
 void display();
 void SetColor(int ForgC);
-void initialize() //krishnas part
+void initialize()
 {
    // 1. replace each empty field in the playfield with a food field
    int i;
@@ -134,7 +134,7 @@ void initialize() //krishnas part
 }
 
 
-void user_input()  //charus part
+void user_input()
 {
    if (_kbhit())
    {
@@ -178,7 +178,7 @@ void user_input()  //charus part
    }
 
 }
-void display()  //charus part
+void display()
 {
     SetColor(1);
 printf("                                        _______   ______    _____   ___      ___   ______   ___       \n");
@@ -191,7 +191,7 @@ SetColor(15);
 }
 
 
-void move_figures() //swaroops part
+void move_figures()
 {
    // 1. delete PacMan from old position
    playfield[myPacMan.position.y][myPacMan.position.x] = ' ';
@@ -305,7 +305,7 @@ void move_figures() //swaroops part
 
 }
 
-void show_playfield() //krishnas part
+void show_playfield()
 {
     int i;
    for ( i = 0; i < H; i++)
@@ -342,7 +342,7 @@ void show_playfield() //krishnas part
 
    printf("                                       Score: %d\n", myPacMan.food_coll);
 }
-void check_coll() //charus part
+void check_coll()
 {
     int i=0;
      for(i=0;i<gho1;i++)
@@ -372,7 +372,7 @@ void check_coll() //charus part
 }
 
 
-void set_cursor_position(int x, int y) //suhails part
+void set_cursor_position(int x, int y)
 {
    //Initialize the coordinates
    COORD coord = { x, y };
@@ -382,7 +382,7 @@ void set_cursor_position(int x, int y) //suhails part
 } // set_cursor_position
 
 
-void hidecursor() //suhails part
+void hidecursor()
 {
    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
    CONSOLE_CURSOR_INFO info;
@@ -390,7 +390,7 @@ void hidecursor() //suhails part
    info.bVisible = FALSE;
    SetConsoleCursorInfo(consoleHandle, &info);
 }
-void SetColor(int ForgC) //suhails part
+void SetColor(int ForgC)
 {
      WORD wColor;
      //This handle is needed to get the current background attribute
