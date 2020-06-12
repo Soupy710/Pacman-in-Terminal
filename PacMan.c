@@ -1,31 +1,28 @@
 #include<windows.h>
 #include<stdio.h>
 #include<conio.h>
-#include<MMsystem.h>
-#define H 30
+#include<MMsystem.h>        //MMsystem.h and windows.h header files are used to play sounds and add colors to the maze and objects in the game
+#define H 30                  //H and W are the hight and width of the maze
 #define W 60
 #define gho1 5
 
-struct coord
+typedef struct coordinates
 {
-   int x;
-   int y;
-};
+   int x,y;                         //x and y represents the actual co-ordinates in the maze
+}co;
 
 struct PacMan
 {
-   struct coord position;
-   int vx;
-   int vy;
+   co position;
+   int vx,vy;
    int food_coll;
 };
 
 
 struct Ghost
 {
-   struct coord position;
-   int vx;
-   int vy;
+   co position;
+   int vx,vy;
 };
 
 
