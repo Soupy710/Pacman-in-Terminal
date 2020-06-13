@@ -11,33 +11,32 @@ typedef struct coordinates
    int x,y;                         //x and y represents the actual co-ordinates in the maze
 }co;
 
-struct PacMan
+typedef struct PacMan
 {
    co position;
    int vx,vy;
    int food_coll;
-};
+}pac;
 
-
-struct Ghost
+typedef struct Ghost
 {
    co position;
    int vx,vy;
-};
+}gh;
 
 
-struct Ghost allGhosts[gho1];
-struct Ghost allGhosts2[gho1];
+gh allGhosts[gho1];
+gh allGhosts2[gho1];
 
-struct PacMan myPacMan = {
-                           {
-                              .x = 1,
-                              .y = 5,
-                           },
-                           .vx = 0,
-                           .vy = 0,
-                           .food_coll = 0,
-                         };
+pac myPacMan = {
+                    {
+                        .x = 1,
+                        .y = 5,
+                    },
+                    .vx = 0,
+                    .vy = 0,
+                    .food_coll = 0,
+                };
 
 char playfield[H][W] =
 {
@@ -73,13 +72,12 @@ char playfield[H][W] =
    { "############################################################" }
 };
 void display();
-void SetColor(int ForgC);
+void SetColor(int);
 void initialize()
 {
-   // 1. replace each empty field in the playfield with a food field
    int i;
 
-   for(i = 0; i < H; i++)
+   for(i = 0; i < H; i++)                           //all the co-ordinates in the playfield are initialised
    {
        int j;
       for( j = 0; j < W; j++)
@@ -89,22 +87,19 @@ void initialize()
       }
    }
 
-   // 2. initialize all ghosts
-
    for ( i = 0; i <gho1; i++)
    {
       allGhosts[i].vx = 0;
       allGhosts[i].vy = 0;
-      // try to find a (x,y) coordinate randomly where a food piece is
       int x,y;
       do
      {
-         x = 1 + rand() % (W-1);
+         x = 1 + rand() % (W-1);            //all ghost co-ordinates are initialised here
          y = 1 + rand() % (H-1);
 
      } while (playfield[y][x] != '.');
       allGhosts[i].position.x = x;
-      allGhosts[i].position.y = y;
+      allGhosts[i].position.y = y;        //ghosts are represented by % and pacman by @
       playfield[y][x] = '%';
 
    }
@@ -112,7 +107,6 @@ void initialize()
    {
       allGhosts2[i].vx = 0;
       allGhosts2[i].vy = 0;
-      // try to find a (x,y) coordinate randomly where a food piece is
       int x,y;
       do
      {
@@ -129,13 +123,11 @@ void initialize()
 
 
 }
-
-
 void user_input()
 {
    if (_kbhit())
    {
-      char c1 = _getch();
+      char c1 = _getch();               //please go through the readme file to know the function of _khbit()
 
       if (c1 == -32)
       {
@@ -168,30 +160,24 @@ void user_input()
              allGhosts2[i].vy=+1;
          }
       }
-
-
-
-
    }
-
 }
 void display()
 {
     SetColor(1);
-printf("                                        _______   ______    _____   ___      ___   ______   ___       \n");
-printf("                                       ||     || ||    ||  ||      ||  |    |  || ||    || ||  |    ||\n");
-printf("                                       ||     || ||    ||  ||      ||   |  |   || ||    || ||   |   ||\n");
-printf("                                       ||_____|| ||____||  ||      ||    ||    || ||____|| ||    |  ||\n");
-printf("                                       ||        ||    ||  ||      ||          || ||    || ||     | ||\n");
-printf("                                       ||        ||    ||  ||____  ||          || ||    || ||      |||\n");
+printf("                                      _______   ______    _____   ___      ___   ______   ___       \n");
+printf("                                     ||     || ||    ||  ||      ||  |    |  || ||    || ||  |    ||\n");
+printf("                                     ||     || ||    ||  ||      ||   |  |   || ||    || ||   |   ||\n");
+printf("                                     ||_____|| ||____||  ||      ||    ||    || ||____|| ||    |  ||\n");
+printf("                                     ||        ||    ||  ||      ||          || ||    || ||     | ||\n");
+printf("                                     ||        ||    ||  ||____  ||          || ||    || ||      |||\n");
 SetColor(15);
 }
 
 
 void move_figures()
 {
-   // 1. delete PacMan from old position
-   playfield[myPacMan.position.y][myPacMan.position.x] = ' ';
+   playfield[myPacMan.position.y][myPacMan.position.x] = ' ';    //first pacman is removed from old co-ordinates and updated to a newer one
    int i;
    for(i=0;i<gho1;i++)
    {
@@ -199,9 +185,8 @@ void move_figures()
         playfield[allGhosts2[i].position.y][allGhosts2[i].position.x] = ' ';
    }
 
-   // 2. compute new desired coordinate (nx,ny)
    int nx = myPacMan.vx + myPacMan.position.x;
-   int ny = myPacMan.vy + myPacMan.position.y;
+   int ny = myPacMan.vy + myPacMan.position.y;      //nx, ny, mx, my are the new co-ordinates
    int mx[5];
    int my[5];
    int mx1[5];
@@ -213,8 +198,7 @@ void move_figures()
         mx1[i] = allGhosts2[i].vx + allGhosts2[i].position.x;
         my1[i] = allGhosts2[i].vy + allGhosts2[i].position.y;
    }
-   // 3. test whether there is a wall at (nx,ny)
-   if (playfield[ny][nx] == '#')
+   if (playfield[ny][nx] == '#')                //THIS part is to make sure that the object stops when it encounters a wall(#)
    {
       myPacMan.vx = 0;
       myPacMan.vy = 0;
@@ -255,11 +239,7 @@ void move_figures()
 
 }
 
-
-
-   // 4. update PacMan's coordinate
-
-   myPacMan.position.x += myPacMan.vx;
+   myPacMan.position.x += myPacMan.vx;                      //pacman and ghost co-ordinates are updated here
    myPacMan.position.y += myPacMan.vy;
     for(i=0;i<gho1;i++)
       {
@@ -270,8 +250,7 @@ void move_figures()
 
       }
 
-   // 5. check for a food piece at the new location
-   if (playfield[ny][nx] == '.')
+   if (playfield[ny][nx] == '.')                        //we simultaneously update the score i.e the food eaten by pacman
    {
       myPacMan.food_coll++;
    }
@@ -281,7 +260,7 @@ void move_figures()
     if(playfield[my[i]][mx[i]] == '.')
     {
 
-            playfield[my[i]-allGhosts[i].vy][mx[i]-allGhosts[i].vx]='.';
+            playfield[my[i]-allGhosts[i].vy][mx[i]-allGhosts[i].vx]='.';  //this part of the code makes sure that ghost dont eat the food
     }
     if(playfield[my1[i]][mx1[i]] == '.')
     {
@@ -290,10 +269,7 @@ void move_figures()
     }
     }
 
-
-   // 6. put PacMan back again to playfield
-
-   playfield[myPacMan.position.y][myPacMan.position.x] = '@';
+   playfield[myPacMan.position.y][myPacMan.position.x] = '@';          //here we put back the pacman and ghost back to the playfield with updated co-ordinates
     for(i=0;i<gho1;i++)
     {
         playfield[allGhosts[i].position.y][allGhosts[i].position.x]='%';
@@ -339,7 +315,7 @@ void show_playfield()
 
    printf("                                       Score: %d\n", myPacMan.food_coll);
 }
-void check_coll()
+void check_coll()                       //This function is to check for any collisions
 {
     int i=0;
      for(i=0;i<gho1;i++)
@@ -369,14 +345,13 @@ void check_coll()
 }
 
 
-void set_cursor_position(int x, int y)
+void set_cursor_position(int x, int y)    //Since we do not want the entire playfield to print multiple times we simply use this hack by setting the cursor position to 0 in every iteration
 {
-   //Initialize the coordinates
+
    COORD coord = { x, y };
-   //Set the position
    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 
-} // set_cursor_position
+}
 
 
 void hidecursor()
