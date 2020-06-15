@@ -1,6 +1,6 @@
-								PACMAN GAME USING STRUCTURES IN C
+					   PACMAN GAME USING STRUCTURES IN C
 
-						MAKE SURE YOU HAVE WINDOWS.H HEADER FILE INCLUDED IN YOUR SYSTEM
+			      MAKE SURE YOU HAVE WINDOWS.H HEADER FILE INCLUDED IN YOUR SYSTEM
 
 These are few of  the functions with their meaning that is used in this project:
 
