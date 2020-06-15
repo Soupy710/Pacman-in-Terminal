@@ -336,7 +336,7 @@ void check_coll()                       //This function is to check for any coll
             display();
             printf("\n\n\n");
             printf("     \t\t\t\t\t\t\t\tU WON THE GAME!!!!!\n");
-            printf("     \t\t\t\t\t\t\t\tYOUR SCORE IS:%d",myPacMan.food_coll);
+            printf("     \t\t\tYOUR SCORE IS:%d",myPacMan.food_coll);
             PlaySound(TEXT("fireworks.wav"),NULL,SND_SYNC);
             getchar();
             exit(0);
